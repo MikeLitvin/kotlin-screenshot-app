@@ -23,10 +23,6 @@ class MainApplication : Application() {
         val fastSaveShortcut = KeyCodeCombination(KeyCode.S,
             KeyCombination.CONTROL_DOWN,
             KeyCombination.SHIFT_DOWN)
-
-//        stage.scene.accelerators[exitShortcut] = Runnable {
-//            Platform.exit()
-//        }
     }
 }
 
