@@ -4,6 +4,7 @@ module com.example.screenmaker {
     requires kotlin.stdlib;
 
     requires org.kordamp.bootstrapfx.core;
+    requires java.desktop;
 
     opens com.example.screenmaker to javafx.fxml;
     exports com.example.screenmaker;
