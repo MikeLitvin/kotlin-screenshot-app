@@ -19,60 +19,46 @@
 <BorderPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.screenmaker.MainController">
    <top>
       <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
-         <menus>
-            <Menu mnemonicParsing="false" text="File">
-               <items>
-                  <MenuItem fx:id="openMI" mnemonicParsing="false" text="Open" />
-                  <MenuItem fx:id="saveMI" mnemonicParsing="false" text="Save" />
-                  <MenuItem fx:id="saveAsMI" mnemonicParsing="false" text="Save As" />
-                  <MenuItem fx:id="closeMI" mnemonicParsing="false" text="Close" />
-               </items>
-            </Menu>
-         </menus>
+         <Menu mnemonicParsing="false" text="File">
+            <MenuItem fx:id="openMI" mnemonicParsing="false" text="Open"/>
+            <MenuItem fx:id="saveMI" mnemonicParsing="false" text="Save"/>
+            <MenuItem fx:id="saveAsMI" mnemonicParsing="false" text="Save As"/>
+            <MenuItem fx:id="closeMI" mnemonicParsing="false" text="Close"/>
+         </Menu>
       </MenuBar>
    </top>
    <left>
-      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #D2D2D2;" BorderPane.alignment="CENTER">
-         <children>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Label text="Delay" />
-                  <Slider fx:id="delaySlider" showTickMarks="true" />
-               </children>
-            </VBox>
-            <CheckBox fx:id="minimizeCheckBox" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" text="Minimize" />
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Button fx:id="screenshotButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" text="Screenshot" onAction="#onScreenshotButtonClicked"/>
-               </children>
-            </VBox>
-         </children>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #D2D2D2;"
+            BorderPane.alignment="CENTER">
+         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+            <Label text="Delay"/>
+            <Slider fx:id="delaySlider" showTickMarks="true"/>
+         </VBox>
+         <CheckBox fx:id="minimizeCheckBox" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false"
+                   text="Minimize"/>
+         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+            <Button fx:id="screenshotButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" text="Screenshot"
+                    onAction="#onScreenshotButtonClicked"/>
+         </VBox>
       </VBox>
    </left>
    <bottom>
-      <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0" style="-fx-background-color: #D2D2D2;" BorderPane.alignment="CENTER">
-         <children>
-            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
-               <children>
-                  <ColorPicker fx:id="colorPicker" />
-                  <CheckBox fx:id="eraserCheckBox" mnemonicParsing="false" text="Eraser" />
-               </children>
-            </VBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Label text="Brush Size" />
-                  <Slider fx:id="brushSizeSlider" showTickLabels="true" showTickMarks="true" />
-               </children>
-            </VBox>
-         </children>
+      <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0"
+            style="-fx-background-color: #D2D2D2;" BorderPane.alignment="CENTER">
+         <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+            <ColorPicker fx:id="colorPicker"/>
+            <CheckBox fx:id="eraserCheckBox" mnemonicParsing="false" text="Eraser"/>
+         </VBox>
+         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+            <Label text="Brush Size"/>
+            <Slider fx:id="brushSizeSlider" showTickLabels="true" showTickMarks="true"/>
+         </VBox>
       </HBox>
    </bottom>
    <center>
       <StackPane fx:id="imgContainer" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fx:id="img" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <Canvas fx:id="canvas" height="200.0" width="200.0" />
-         </children>
+         <ImageView fx:id="img" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true"/>
+         <Canvas fx:id="canvas" height="200.0" width="200.0"/>
       </StackPane>
    </center>
 </BorderPane>

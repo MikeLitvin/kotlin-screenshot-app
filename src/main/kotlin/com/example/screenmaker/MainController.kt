@@ -2,6 +2,7 @@ package com.example.screenmaker
 
 import javafx.fxml.FXML
 import javafx.scene.canvas.Canvas
+import javafx.scene.canvas.GraphicsContext
 import javafx.scene.control.*
 import javafx.scene.image.ImageView
 import javafx.scene.image.WritableImage
@@ -25,7 +26,7 @@ class MainController {
     private lateinit var main: BorderPane
 
     @FXML
-    private lateinit var munuBar: MenuBar
+    private lateinit var menuBar: MenuBar
 
     @FXML
     private lateinit var openMI: MenuItem
@@ -66,25 +67,29 @@ class MainController {
     @FXML
     private lateinit var canvas: Canvas
 
-    var gc = canvas.graphicsContext2D
+    lateinit var gc: GraphicsContext
+
+    fun initialize() {
+        gc = canvas.graphicsContext2D
+    }
 
     @FXML
     private fun onScreenshotButtonClicked() {
         try {
-            var robot = Robot()
-            var fileName = "/Users/a1/Desktop/screenshots/screenshotapp" + LocalDateTime.now().toString() + ".jpg"
+            val robot = Robot()
+            val fileName = "/Users/a1/Desktop/screenshots/screenshotapp" + LocalDateTime.now().toString() + ".jpg"
 
-            var screenSize = Toolkit.getDefaultToolkit().getScreenSize()
-            var captureRect = Rectangle(0, 0, screenSize.width, screenSize.height)
-            var screenFullImage = robot.createScreenCapture(captureRect)
-            var format = WritablePixelFormat.getByteBgraInstance()
+            val screenSize = Toolkit.getDefaultToolkit().screenSize
+            val captureRect = Rectangle(0, 0, screenSize.width, screenSize.height)
+            val screenFullImage = robot.createScreenCapture(captureRect)
+            val format = WritablePixelFormat.getByteBgraInstance()
             val buffer = ByteArray(captureRect.width * captureRect.height * 4)
 
             ImageIO.write(screenFullImage, "jpg", File(fileName))
 
             val newImg = WritableImage(captureRect.width, captureRect.height)
             newImg.pixelWriter.setPixels(
-                0, 0, captureRect.width, captureRect.height.toInt(),
+                0, 0, captureRect.width, captureRect.height,
                 format, buffer, 0, captureRect.width * 4
             )
 
@@ -97,7 +102,6 @@ class MainController {
             imgContainer.prefHeightProperty().bind(img.fitHeightProperty())
             imgContainer.prefWidthProperty().bind(img.fitWidthProperty())
 
-            print("Done")
         } catch (ex: IOException) {
             print(ex)
         }
