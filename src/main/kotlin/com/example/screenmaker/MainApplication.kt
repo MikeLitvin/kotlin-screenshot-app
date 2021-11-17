@@ -1,6 +1,7 @@
 package com.example.screenmaker
 
 import javafx.application.Application
+import javafx.application.Platform
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene
@@ -16,6 +17,7 @@ class MainApplication : Application() {
         val scene = Scene(fxmlLoader.load())
         stage.title = "Screenshot App"
         stage.scene = scene
+        stage.show()
         val exitShortcut = KeyCodeCombination(KeyCode.Q,
             KeyCombination.CONTROL_DOWN)
         val saveShortcut = KeyCodeCombination(KeyCode.S,
@@ -23,7 +25,16 @@ class MainApplication : Application() {
         val fastSaveShortcut = KeyCodeCombination(KeyCode.S,
             KeyCombination.CONTROL_DOWN,
             KeyCombination.SHIFT_DOWN)
-        stage.show()
+        val openShortcut = KeyCodeCombination(KeyCode.O,
+            KeyCombination.CONTROL_DOWN)
+
+        stage.scene.accelerators[exitShortcut] = Runnable{
+            Platform.exit()
+        }
+
+        stage.scene.accelerators[openShortcut] = Runnable {
+            fxmlLoader.getController<MainController>().openImage()
+        }
     }
 }
 

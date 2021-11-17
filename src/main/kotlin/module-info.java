@@ -5,6 +5,8 @@ module com.example.screenmaker {
 
     requires org.kordamp.bootstrapfx.core;
     requires java.desktop;
+    requires kotlinx.coroutines.core.jvm;
+    requires javafx.swing;
 
     opens com.example.screenmaker to javafx.fxml;
     exports com.example.screenmaker;
