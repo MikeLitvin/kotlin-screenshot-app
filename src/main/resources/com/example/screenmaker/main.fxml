@@ -16,14 +16,32 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.screenmaker.MainController">
+<BorderPane
+        fx:id="main"
+        maxHeight="-Infinity"
+        maxWidth="-Infinity"
+        minHeight="-Infinity"
+        minWidth="-Infinity"
+        prefHeight="400.0"
+        prefWidth="600.0"
+        xmlns="http://javafx.com/javafx/17"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.example.screenmaker.MainController">
    <top>
       <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
          <Menu mnemonicParsing="false" text="File">
-            <MenuItem fx:id="openMI" mnemonicParsing="false" text="Open" />
-            <MenuItem fx:id="saveMI" mnemonicParsing="false" text="Save" />
-            <MenuItem fx:id="saveAsMI" mnemonicParsing="false" text="Save As" />
-            <MenuItem fx:id="closeMI" mnemonicParsing="false" text="Close" />
+            <MenuItem fx:id="openMI"
+                      mnemonicParsing="false"
+                      text="Open" />
+            <MenuItem fx:id="saveMI"
+                      mnemonicParsing="false"
+                      text="Save" />
+            <MenuItem fx:id="saveAsMI"
+                      mnemonicParsing="false"
+                      text="Save As" />
+            <MenuItem fx:id="closeMI"
+                      mnemonicParsing="false"
+                      text="Close" />
          </Menu>
       </MenuBar>
    </top>
@@ -40,22 +58,33 @@
       </VBox>
    </left>
    <bottom>
-      <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0" style="-fx-background-color: #D2D2D2;" BorderPane.alignment="CENTER">
-         <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+      <HBox alignment="BOTTOM_CENTER"
+            spacing="100.0"
+            style="-fx-background-color: #D2D2D2;"
+            BorderPane.alignment="CENTER">
+         <VBox alignment="CENTER_LEFT"
+               spacing="20.0">
             <ColorPicker fx:id="colorPicker" />
-            <CheckBox fx:id="eraserCheckBox" mnemonicParsing="false" text="Eraser" />
+            <CheckBox fx:id="eraserCheckBox"
+                      mnemonicParsing="false"
+                      text="Eraser" />
          </VBox>
-         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+         <VBox alignment="CENTER">
             <Label text="Brush Size" />
-            <Slider fx:id="brushSizeSlider" showTickLabels="true" showTickMarks="true" />
+            <Slider fx:id="brushSizeSlider"
+                    showTickLabels="true"
+                    showTickMarks="true" />
          </VBox>
       </HBox>
    </bottom>
    <center>
-      <ScrollPane fx:id="scrollImage" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <StackPane fx:id="imgContainer" prefHeight="150.0" prefWidth="200.0">
-            <ImageView fx:id="img" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true"/>
-            <Canvas fx:id="canvas" height="200.0" width="200.0"/>
+      <ScrollPane fx:id="scrollImage"
+              BorderPane.alignment="CENTER">
+         <StackPane fx:id="imgContainer">
+            <ImageView fx:id="img"
+                       pickOnBounds="true"
+                       preserveRatio="true"/>
+            <Canvas fx:id="canvas"/>
          </StackPane>
       </ScrollPane>
    </center>
