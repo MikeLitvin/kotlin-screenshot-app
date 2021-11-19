@@ -1,34 +1,25 @@
 package com.example.screenmaker
 
-import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.control.*
 import javafx.scene.image.ImageView
 import javafx.scene.image.WritableImage
-import javafx.scene.image.WritablePixelFormat
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.StackPane
 import javafx.stage.FileChooser
 import javafx.stage.Stage
-import kotlinx.coroutines.DelicateCoroutinesApi
 import java.awt.Rectangle
 import java.awt.Robot
 import java.awt.Toolkit
 import java.io.File
-import java.io.IOException
 import java.time.LocalDateTime
-import java.util.*
 import javax.imageio.ImageIO
 import javafx.embed.swing.SwingFXUtils
 import javafx.event.EventHandler
 import javafx.scene.input.MouseEvent
 import javafx.scene.shape.ArcType
-import javafx.stage.Screen
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class MainController {
 
@@ -95,10 +86,8 @@ class MainController {
         openMI.onAction = EventHandler {
             open()
         }
-        canvas.onMouseClicked = clickDrawHandler
         canvas.onMousePressed = pressDrawHandler
         canvas.onMouseDragged = dragDrawHandler
-        canvas.onMouseReleased = releaseDrawHandler
     }
 
     private fun open() {
@@ -114,27 +103,24 @@ class MainController {
     @FXML
     private fun onScreenshotButtonClicked() {
         if (isMinimize){
-            print("minimize flag")
-            stage?.isMaximized = false
+            print("minimize flag  \n")
+            stage?.isIconified = true
         }
-            val robot = Robot()
-            val fileName = "/Users/a1/Desktop/screenshots/screenshotapp" + LocalDateTime.now().toString() + ".jpg"
+        print("Delay duration: $delayDuration \n")
+        Thread.sleep(delayDuration)
+        print("Delay ends \n")
+        val robot = Robot()
+        val fileName = "/Users/a1/Desktop/screenshots/screenshotapp" + LocalDateTime.now().toString() + ".jpg"
 
-            val screenSize = Toolkit.getDefaultToolkit().screenSize
-            val captureRect = Rectangle(0, 0, screenSize.width, screenSize.height)
-            val screenFullImage = robot.createScreenCapture(captureRect)
-            val format = WritablePixelFormat.getByteBgraInstance()
-            val buffer = ByteArray(captureRect.width * captureRect.height * 4)
+        val screenSize = Toolkit.getDefaultToolkit().screenSize
+        val captureRect = Rectangle(0, 0, screenSize.width, screenSize.height)
+        val screenFullImage = robot.createScreenCapture(captureRect)
 
-            ImageIO.write(screenFullImage, "png", File(fileName))
+        ImageIO.write(screenFullImage, "png", File(fileName))
 
-            val newImg = WritableImage(captureRect.width, captureRect.height)
-            newImg.pixelWriter.setPixels(
-                0, 0, captureRect.width, captureRect.height,
-                format, buffer, 0, captureRect.width * 4
-            )
-            setupImageView(newImg)
-        print("screenshot")
+        val newImg = SwingFXUtils.toFXImage(ImageIO.read(File(fileName)), null)
+        print("screenshot \n")
+        setupImageView(newImg)
     }
 
     private fun setupImageView(image: WritableImage) {
@@ -147,6 +133,7 @@ class MainController {
         img.image = image
         imgContainer.maxWidth = image.width
         imgContainer.maxHeight = image.height
+        print("Image set up\n")
     }
 
     fun openImage() {
@@ -164,35 +151,19 @@ class MainController {
     }
 
 // Paint tools
-
-//    canvas.onMouseDragged = EventHandler<MouseEvent>
-//    {
-//        e ->
-//        val size = brushSize
-//        val x = e.x - size / 2
-//        val y = e.y - size / 2
-//
-//        if (e.button == MouseButton.SECONDARY) {
-//            g.clearRect(x, y, size, size)
-//        } else {
-//            g.fill = Color.RED
-//            g.fillRect(x, y, size, size)
-//        }
-//    }
-
     @FXML
-    fun colorPicked() {
-        canvas.graphicsContext2D.fill = colorPicker.value
-    }
-
-    private var clickDrawHandler = EventHandler { event: MouseEvent ->
-        val x = event.x
-        val y = event.y
-        canvas.graphicsContext2D.fillArc(x - brushSize / 2, y - brushSize / 2,
-            brushSize, brushSize, 0.0, 360.0, ArcType.OPEN)
+    fun eraserCheckBoxTouched() {
+        if (eraserCheckBox.isSelected) {
+            canvas.onMousePressed = pressEraserHandler
+            canvas.onMouseDragged = dragEraserHandler
+        } else {
+            canvas.onMousePressed = pressDrawHandler
+            canvas.onMouseDragged = dragDrawHandler
+        }
     }
 
     private var pressDrawHandler = EventHandler { event: MouseEvent ->
+        gc.stroke = colorPicker.value
         val x = event.x
         val y = event.y
         canvas.graphicsContext2D.fillArc(x - brushSize / 2, y - brushSize / 2,
@@ -208,11 +179,15 @@ class MainController {
         gc.stroke()
     }
 
-    private var releaseDrawHandler = EventHandler { event: MouseEvent ->
-        gc.stroke = colorPicker.value
-        gc.lineWidth = brushSize
-        gc.lineTo(event.x, event.y)
-        gc.stroke()
-        gc.closePath()
+    private var pressEraserHandler = EventHandler { event: MouseEvent ->
+        gc.clearRect(event.x - brushSize / 2, event.y - brushSize / 2,
+            brushSize, brushSize)
     }
+
+    private var dragEraserHandler = EventHandler { event: MouseEvent ->
+        gc.clearRect(event.x - brushSize / 2,
+            event.y - brushSize / 2,
+            brushSize, brushSize)
+    }
+
 }

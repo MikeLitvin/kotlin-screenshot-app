@@ -28,7 +28,8 @@
         xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="com.example.screenmaker.MainController">
    <top>
-      <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
+      <MenuBar fx:id="menuBar"
+               BorderPane.alignment="CENTER">
          <Menu mnemonicParsing="false" text="File">
             <MenuItem fx:id="openMI"
                       mnemonicParsing="false"
@@ -46,14 +47,32 @@
       </MenuBar>
    </top>
    <left>
-      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #D2D2D2;" BorderPane.alignment="CENTER">
-         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+      <VBox alignment="TOP_CENTER"
+            prefHeight="200.0"
+            prefWidth="100.0"
+            style="-fx-background-color: #D2D2D2;"
+            BorderPane.alignment="CENTER">
+         <VBox alignment="CENTER"
+               prefHeight="200.0"
+               prefWidth="100.0">
             <Label text="Delay" />
-            <Slider fx:id="delaySlider" showTickMarks="true" />
+            <Slider fx:id="delaySlider"
+                    showTickMarks="true" />
          </VBox>
-         <CheckBox fx:id="minimizeCheckBox" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" text="Minimize" />
-         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-            <Button fx:id="screenshotButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#onScreenshotButtonClicked" text="Screenshot" />
+         <CheckBox fx:id="minimizeCheckBox"
+                   alignment="CENTER"
+                   onAction="#minimizeCheckboxSelected"
+                   contentDisplay="TOP"
+                   mnemonicParsing="false"
+                   text="Minimize" />
+         <VBox alignment="CENTER"
+               prefHeight="200.0"
+               prefWidth="100.0">
+            <Button fx:id="screenshotButton"
+                    alignment="BOTTOM_CENTER"
+                    mnemonicParsing="false"
+                    onAction="#onScreenshotButtonClicked"
+                    text="Screenshot" />
          </VBox>
       </VBox>
    </left>
@@ -66,6 +85,7 @@
                spacing="20.0">
             <ColorPicker fx:id="colorPicker" />
             <CheckBox fx:id="eraserCheckBox"
+                      onAction="#eraserCheckBoxTouched"
                       mnemonicParsing="false"
                       text="Eraser" />
          </VBox>
