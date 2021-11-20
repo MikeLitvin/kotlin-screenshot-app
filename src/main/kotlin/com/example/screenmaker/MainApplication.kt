@@ -11,11 +11,17 @@ import javafx.stage.Stage
 
 
 class MainApplication : Application() {
+
+    private lateinit var scene: Scene
+    private lateinit var mainController: MainController
+
     override fun start(stage: Stage) {
         val fxmlLoader = FXMLLoader(MainApplication::class.java.getResource("main.fxml"))
-        val scene = Scene(fxmlLoader.load())
+        scene = Scene(fxmlLoader.load())
         stage.title = "Screenshot App"
         stage.scene = scene
+        mainController = fxmlLoader.getController()
+        mainController.stage = stage
         stage.show()
         val exitShortcut = KeyCodeCombination(KeyCode.Q,
             KeyCombination.CONTROL_DOWN)
