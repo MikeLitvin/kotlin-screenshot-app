@@ -1,12 +1,12 @@
 package com.example.screenmaker
 
+import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.control.*
 import javafx.scene.image.ImageView
 import javafx.scene.image.WritableImage
-import javafx.scene.layout.BorderPane
 import javafx.scene.layout.StackPane
 import javafx.stage.FileChooser
 import javafx.stage.Stage
@@ -18,16 +18,13 @@ import java.time.LocalDateTime
 import javax.imageio.ImageIO
 import javafx.embed.swing.SwingFXUtils
 import javafx.event.EventHandler
+import javafx.scene.SnapshotParameters
 import javafx.scene.input.MouseEvent
+import javafx.scene.paint.Color
 import javafx.scene.shape.ArcType
+import javafx.stage.DirectoryChooser
 
 class MainController {
-
-    @FXML
-    private lateinit var main: BorderPane
-
-    @FXML
-    private lateinit var menuBar: MenuBar
 
     @FXML
     private lateinit var openMI: MenuItem
@@ -72,7 +69,7 @@ class MainController {
     private lateinit var canvas: Canvas
 
     private lateinit var gc: GraphicsContext
-    private var stage: Stage? = null
+    var stage: Stage? = null
     private var isMinimize: Boolean = false
     private val delayDuration get() = delaySlider.value.toLong() * 1000L + 300
     private val brushSize get() = brushSizeSlider.value
@@ -84,14 +81,19 @@ class MainController {
         gc.fill = colorPicker.value
         screenshotButton.onAction = EventHandler { onScreenshotButtonClicked() }
         openMI.onAction = EventHandler {
-            open()
+            openImage()
+        }
+        saveAsMI.onAction = EventHandler {
+            stage?.let { it1 -> saveImage(false, img, canvas, it1) }
+        }
+        saveMI.onAction = EventHandler {
+            stage?.let { it1 -> saveImage(true, img, canvas, it1) }
+        }
+        closeMI.onAction = EventHandler {
+            close()
         }
         canvas.onMousePressed = pressDrawHandler
         canvas.onMouseDragged = dragDrawHandler
-    }
-
-    private fun open() {
-        openImage()
     }
 
     // Screenshot tools
@@ -116,11 +118,34 @@ class MainController {
         val captureRect = Rectangle(0, 0, screenSize.width, screenSize.height)
         val screenFullImage = robot.createScreenCapture(captureRect)
 
-        ImageIO.write(screenFullImage, "png", File(fileName))
+        ImageIO.write(screenFullImage, "jpg", File(fileName))
 
         val newImg = SwingFXUtils.toFXImage(ImageIO.read(File(fileName)), null)
         print("screenshot \n")
         setupImageView(newImg)
+        stage?.isIconified = false
+    }
+
+    @FXML
+    fun saveImage(isQuick: Boolean, imgC: ImageView, drawC: Canvas, stage: Stage) {
+        val fileName =  "screanshot" + LocalDateTime.now().toString() + ".jpg"
+        val file: File
+        if (isQuick) {
+            file = File("/Users/a1/Desktop/screenshots/screenshotapp" + fileName)
+        } else {
+            val directoryChooser = DirectoryChooser()
+            val dir = directoryChooser.showDialog(stage) ?: return
+            file = File(dir.toString() + fileName)
+        }
+        val params = SnapshotParameters()
+        params.fill = Color.TRANSPARENT
+        val snapImg = imgC.snapshot(params, null)
+        val snapDraw = drawC.snapshot(params, null)
+        val result = Canvas(drawC.width, drawC.height)
+        val resultCtx = result.graphicsContext2D
+        resultCtx.drawImage(snapImg, 0.0, 0.0)
+        resultCtx.drawImage(snapDraw, 0.0, 0.0)
+        ImageIO.write(SwingFXUtils.fromFXImage(result.snapshot(params, null), null), "png", file)
     }
 
     private fun setupImageView(image: WritableImage) {
@@ -148,6 +173,18 @@ class MainController {
         val file = fileChooser.showOpenDialog(stage)
         val image =  SwingFXUtils.toFXImage(ImageIO.read(file.inputStream()), null)
         setupImageView(image)
+    }
+
+    fun saveAs(){
+        stage?.let { it1 -> saveImage(false, img, canvas, it1) }
+    }
+
+    fun fastSave(){
+        stage?.let { it1 -> saveImage(true, img, canvas, it1) }
+    }
+
+    fun close(){
+        Platform.exit()
     }
 
 // Paint tools
@@ -185,8 +222,7 @@ class MainController {
     }
 
     private var dragEraserHandler = EventHandler { event: MouseEvent ->
-        gc.clearRect(event.x - brushSize / 2,
-            event.y - brushSize / 2,
+        gc.clearRect(event.x - brushSize / 2, event.y - brushSize / 2,
             brushSize, brushSize)
     }
 

@@ -1,7 +1,6 @@
 package com.example.screenmaker
 
 import javafx.application.Application
-import javafx.application.Platform
 import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.scene.input.KeyCode
@@ -34,11 +33,19 @@ class MainApplication : Application() {
             KeyCombination.CONTROL_DOWN)
 
         stage.scene.accelerators[exitShortcut] = Runnable{
-            Platform.exit()
+            fxmlLoader.getController<MainController>().close()
         }
 
         stage.scene.accelerators[openShortcut] = Runnable {
             fxmlLoader.getController<MainController>().openImage()
+        }
+
+        stage.scene.accelerators[saveShortcut] = Runnable {
+            fxmlLoader.getController<MainController>().saveAs()
+        }
+
+        stage.scene.accelerators[fastSaveShortcut] = Runnable {
+            fxmlLoader.getController<MainController>().fastSave()
         }
     }
 }

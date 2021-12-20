@@ -7,6 +7,7 @@ module com.example.screenmaker {
     requires java.desktop;
     requires kotlinx.coroutines.core.jvm;
     requires javafx.swing;
+    requires org.apache.commons.io;
 
     opens com.example.screenmaker to javafx.fxml;
     exports com.example.screenmaker;

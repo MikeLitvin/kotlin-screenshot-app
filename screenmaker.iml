@@ -54,5 +54,6 @@
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.5.30" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:17.0.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:mac:17.0.0.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.6" level="project" />
   </component>
 </module>
