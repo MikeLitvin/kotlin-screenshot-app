@@ -128,14 +128,13 @@ class MainController {
 
     @FXML
     fun saveImage(isQuick: Boolean, imgC: ImageView, drawC: Canvas, stage: Stage) {
-        val fileName =  "screanshot" + LocalDateTime.now().toString() + ".jpg"
-        val file: File
-        if (isQuick) {
-            file = File("/Users/a1/Desktop/screenshots/screenshotapp" + fileName)
+        val fileName =  "screenshot" + LocalDateTime.now().toString() + ".jpg"
+        val file: File = if (isQuick) {
+            File("/Users/a1/Desktop/screenshots/screenshotapp$fileName")
         } else {
             val directoryChooser = DirectoryChooser()
             val dir = directoryChooser.showDialog(stage) ?: return
-            file = File(dir.toString() + fileName)
+            File(dir.toString() + fileName)
         }
         val params = SnapshotParameters()
         params.fill = Color.TRANSPARENT
