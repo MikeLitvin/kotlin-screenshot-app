@@ -91,11 +91,12 @@ class AreaSelector {
     }
 
     fun start(image: WritableImage): Rectangle2D{
-        val scene = Scene(layout)
 
         setupStage()
         setupOverlay()
         setupLayout(image)
+
+        val scene = Scene(layout)
 
         stage.scene = scene
         stage.showAndWait()
