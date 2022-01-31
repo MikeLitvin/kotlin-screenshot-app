@@ -10,19 +10,23 @@ import javafx.scene.image.WritableImage
 import javafx.scene.layout.StackPane
 import javafx.stage.FileChooser
 import javafx.stage.Stage
-import java.awt.Rectangle
-import java.awt.Robot
+import javafx.scene.robot.Robot
 import java.awt.Toolkit
 import java.io.File
 import java.time.LocalDateTime
 import javax.imageio.ImageIO
 import javafx.embed.swing.SwingFXUtils
 import javafx.event.EventHandler
+import javafx.geometry.Rectangle2D
 import javafx.scene.SnapshotParameters
+import javafx.scene.image.WritablePixelFormat
 import javafx.scene.input.MouseEvent
 import javafx.scene.paint.Color
 import javafx.scene.shape.ArcType
 import javafx.stage.DirectoryChooser
+import javafx.stage.Screen
+import java.awt.image.RenderedImage
+import java.awt.image.WritableRenderedImage
 
 class MainController {
 
@@ -111,19 +115,45 @@ class MainController {
         print("Delay duration: $delayDuration \n")
         Thread.sleep(delayDuration)
         print("Delay ends \n")
+
         val robot = Robot()
-        val fileName = "/Users/a1/Desktop/screenshots/screenshotapp" + LocalDateTime.now().toString() + ".jpg"
 
-        val screenSize = Toolkit.getDefaultToolkit().screenSize
-        val captureRect = Rectangle(0, 0, screenSize.width, screenSize.height)
-        val screenFullImage = robot.createScreenCapture(captureRect)
+//        val fileName = "/Users/a1/Desktop/screenshots/screenshotapp" + LocalDateTime.now().toString() + ".jpg"
 
-        ImageIO.write(screenFullImage, "jpg", File(fileName))
+        val screenFullImage = robot.getScreenCapture(null, Screen.getPrimary().bounds)
+        val screenshotRectangle = AreaSelector().start(screenFullImage)
+        val croppedScreenshot = screenFullImage.crop(screenshotRectangle)
 
-        val newImg = SwingFXUtils.toFXImage(ImageIO.read(File(fileName)), null)
+//        val fullScreenshot = robot.getScreenCapture(null, Screen.getPrimary().bounds)
+//        val screenshotRectangle = ScreenshotAreaSelector().start(fullScreenshot)
+//        val croppedScreenshot = fullScreenshot.crop(screenshotRectangle)
+
+//        val newImg = SwingFXUtils.toFXImage(ImageIO.read(File(fileName)), null)
         print("screenshot \n")
-        setupImageView(newImg)
+        setupImageView(croppedScreenshot)
         stage?.isIconified = false
+    }
+
+    private fun WritableImage.crop(newRect: Rectangle2D): WritableImage {
+        val croppedImage = WritableImage(newRect.width.toInt(), newRect.height.toInt())
+
+        val reader = this.pixelReader
+        val writer = croppedImage.pixelWriter
+        val buffer = ByteArray(newRect.width.toInt() * newRect.height.toInt() * 4)
+        val format = WritablePixelFormat.getByteBgraInstance()
+
+        reader.getPixels(
+            newRect.minX.toInt(), newRect.minY.toInt(),
+            newRect.width.toInt(), newRect.height.toInt(),
+            format, buffer, 0, newRect.width.toInt() * 4
+        )
+
+        writer.setPixels(
+            0, 0,
+            newRect.width.toInt(), newRect.height.toInt(),
+            format, buffer, 0, newRect.width.toInt() * 4
+        )
+        return croppedImage
     }
 
     @FXML

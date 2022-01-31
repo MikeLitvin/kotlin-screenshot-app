@@ -33,10 +33,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:17-ea+11" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:mac:17-ea+11" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:17-ea+11" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:mac:17-ea+11" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:17-ea+11" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:mac:17-ea+11" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:17-ea+11" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:mac:17-ea+11" level="project" />
     <orderEntry type="library" name="Maven: org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0" level="project" />
@@ -55,5 +51,9 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:17.0.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:mac:17.0.0.1" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.6" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:17-ea+11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:mac:17-ea+11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:17-ea+11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:mac:17-ea+11" level="project" />
   </component>
 </module>
